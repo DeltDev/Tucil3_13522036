@@ -1,18 +1,27 @@
 import java.io.IOException;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-public class MainSceneController {
+import javafx.scene.control.ChoiceBox;
+import java.net.URL;
+import java.util.ResourceBundle;
+public class MainSceneController implements Initializable {
     private Scene scene;
     private Stage stage;
     private Parent root;
-
+    private String[] MethodList = {"UCS","A*","Greedy Best First Search"};
+    @FXML
+    private ChoiceBox<String> MethodChoiceBox;
     public void GoToLandScene(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
         root = FXMLLoader.load(getClass().getResource("landscene.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
@@ -38,5 +47,10 @@ public class MainSceneController {
         stage.setScene(scene);
         stage.show();
         System.out.println("Mulai");
+    }
+
+    @Override
+    public void initialize(URL arg1, ResourceBundle arg2){
+        MethodChoiceBox.getItems().addAll(MethodList);
     }
 }
