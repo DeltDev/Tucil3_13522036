@@ -29,7 +29,7 @@
             <Font name="ITCAvantGardeStd-Md" size="24.0" />
          </font>
       </Button>
-      <TextField layoutX="52.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="StartingWord" layoutX="52.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
       <Label layoutX="111.0" layoutY="202.0" text="Kata Awal">
          <font>
             <Font name="ITCAvantGardeStd-Md" size="36.0" />
@@ -40,12 +40,17 @@
             <Font name="ITCAvantGardeStd-Md" size="36.0" />
          </font>
       </Label>
-      <TextField layoutX="935.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="EndingWord" layoutX="935.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
       <Label layoutX="474.0" layoutY="202.0" text="Metode Pencarian">
          <font>
             <Font name="ITCAvantGardeStd-Md" size="36.0" />
          </font>
       </Label>
       <ChoiceBox fx:id="MethodChoiceBox" layoutX="489.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
+      <Label fx:id="ErrorMessage" layoutX="73.0" layoutY="475.0" text="Tulis Error di sini">
+         <font>
+            <Font name="Segoe UI Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
