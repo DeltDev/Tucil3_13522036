@@ -13,7 +13,7 @@ public class Controller {
     private Scene scene;
     private Stage stage;
     private Parent root;
-    public void Mulai(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
+    public void GoToMainScene(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
         root = FXMLLoader.load(getClass().getResource("mainscene.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -21,8 +21,17 @@ public class Controller {
         stage.show();
         System.out.println("Mulai");
     }
-    public void Kembali(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
+    public void GoToLandScene(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
         root = FXMLLoader.load(getClass().getResource("landscene.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        System.out.println("Mulai");
+    }
+    
+    public void GoToResultScene(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
+        root = FXMLLoader.load(getClass().getResource("resultscene.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

@@ -12,12 +12,12 @@
             <Font name="Segoe UI Bold" size="42.0" />
          </font>
       </Label>
-      <Button layoutX="19.0" layoutY="340.0" mnemonicParsing="false" onAction="#Kembali" text="Kembali">
+      <Button layoutX="19.0" layoutY="340.0" mnemonicParsing="false" onAction="#GoToLandScene" text="Kembali">
          <font>
             <Font name="ITCAvantGardeStd-Md" size="24.0" />
          </font>
       </Button>
-      <Button layoutX="255.0" layoutY="340.0" mnemonicParsing="false" text="Cari!">
+      <Button layoutX="255.0" layoutY="340.0" mnemonicParsing="false" onAction="#GoToResultScene" text="Cari!">
          <font>
             <Font name="ITCAvantGardeStd-Md" size="24.0" />
          </font>
