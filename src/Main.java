@@ -1,23 +1,26 @@
+
+
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-
+import javafx.scene.Parent;
 public class Main extends Application {
 
   @Override
-  public void start(Stage primaryStage) {
-    Label helloLabel = new Label("Hello World!");
+  public void start(Stage stage) {
 
-    StackPane root = new StackPane();
-    root.getChildren().add(helloLabel);
+    try{
+        Parent root = FXMLLoader.load(getClass().getResource("scenetest.fxml"));
 
-    Scene scene = new Scene(root, 300, 250);
-
-    primaryStage.setTitle("Hello World!");
-    primaryStage.setScene(scene);
-    primaryStage.show();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
+    } catch (Exception e){
+        System.out.println(e.getMessage());
+    }
+    
   }
 
   public static void main(String[] args) {
