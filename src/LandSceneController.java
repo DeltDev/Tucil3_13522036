@@ -13,11 +13,13 @@ public class LandSceneController {
     private Stage stage;
     private Parent root;
     public void GoToMainScene(ActionEvent e) throws IOException{ //controller tombol mulai di scene utama
+        DictionarySplitter.SplitDictionary();
         root = FXMLLoader.load(getClass().getResource("mainscene.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
         System.out.println("Mulai");
     }
 }
