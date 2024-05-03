@@ -85,7 +85,7 @@ public class MainSceneController implements Initializable {
 
     public boolean ValidateWord(String check, int len){ //periksa apakah kata ada di dalam dictionary
         
-        try (BufferedReader BR = new BufferedReader(new FileReader("./src/dictionary/dictionary.txt"))){
+        try (BufferedReader BR = new BufferedReader(new FileReader("./src/cache/Length"+Integer.toString(len)+".config"));){
             String line;
             while ((line = BR.readLine()) != null) {
                 line = line.trim();
