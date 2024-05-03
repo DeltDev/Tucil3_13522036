@@ -32,7 +32,7 @@ public class DictionaryController {
 
             for (Integer key : dictLength.keySet()) {
                 ArrayList<String> words = dictLength.get(key);
-                BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/Length"+Integer.toString(key)+".config"));
+                BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/Length"+Integer.toString(key)+".dat"));
                 for(int i = 0; i<words.size(); i++){
                     BW.write(words.get(i));
                     if(i != words.size() -1){
