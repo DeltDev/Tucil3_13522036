@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import java.io.File;
 public class Main extends Application {
 
   @Override
@@ -23,6 +24,12 @@ public class Main extends Application {
     
   }
 
+  @Override
+  public void stop(){
+    System.out.println("Window ditutup");
+    File dir = new File("./src/cache");
+    DictionaryController.deleteFilesInDirectory(dir);
+  }
   public static void main(String[] args) {
     launch(args);
   }

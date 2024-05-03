@@ -1,11 +1,12 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class DictionarySplitter {
+public class DictionaryController {
    
     public static void SplitDictionary(){
         HashMap<Integer, ArrayList<String>> dictLength = new HashMap<>();
@@ -44,5 +45,15 @@ public class DictionarySplitter {
             e.printStackTrace();
         }
     }
-    
+
+
+    public static void deleteFilesInDirectory(File directory) {
+        if (directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                if (file.isFile() && !file.getName().equals(".gitkeep")) {
+                    file.delete();
+                }
+            }
+        }
+    }
 }
