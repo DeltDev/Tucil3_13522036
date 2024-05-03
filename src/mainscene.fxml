@@ -52,5 +52,10 @@
             <Font name="Segoe UI Bold" size="24.0" />
          </font>
       </Label>
+      <Label layoutX="343.0" layoutY="66.0" text="Keterangan: Input kata adalah Case Insensitive">
+         <font>
+            <Font name="ITCAvantGardeStd-Md" size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
