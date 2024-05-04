@@ -94,6 +94,10 @@ public class Graph {
         }
         return path;
     }
+
+    public ArrayList<String> Astar(String src, String target){
+        return new ArrayList<>();
+    }
     public void printGraphDebug() {
         for (String word : graph.keySet()) {
           System.out.println("Adjacency list of vertex " + word);

@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import java.net.URL;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.io.FileReader;
-import java.io.FileWriter;
 
 public class MainSceneController implements Initializable {
     private Scene scene;
