@@ -18,8 +18,8 @@ public class ResultSceneController {
         SearchingMethod.setText(chosenMethod);
     }
 
-    public void displayExecTime(int execTime){
-        String output = Integer.toString(execTime) + " ms";
+    public void displayExecTime(long execTime){
+        String output = Long.toString(execTime) + " ms";
         ExecTime.setText(output);
     }
 

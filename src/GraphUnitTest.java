@@ -4,7 +4,7 @@ import java.util.*;
 public class GraphUnitTest {
     static public void main(String args[]){
         
-        try (BufferedReader BR = new BufferedReader(new FileReader("./cache/Length"+Integer.toString(5)+".dat"));){
+        try (BufferedReader BR = new BufferedReader(new FileReader("./Length"+Integer.toString(4)+".dat"));){
             String line;
             ArrayList<String> arr = new ArrayList<String>();
             while ((line = BR.readLine()) != null) {
@@ -15,7 +15,8 @@ public class GraphUnitTest {
                 arr.add(line);
             }
             Graph graph = new Graph(arr);
-            graph.printGraph();
+            graph.printGraphDebug();
+            System.out.println(graph.UCS("port", "fart"));
         } catch (Exception e){
             e.printStackTrace();
         }

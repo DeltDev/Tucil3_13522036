@@ -3,6 +3,8 @@
 // A Java program to demonstrate adjacency
 // list using HashMap and TreeSet
 // representation of graphs using sets
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.*;
  
 public class Graph {
@@ -46,7 +48,53 @@ public class Graph {
         }
         return mismatch;
     }
-    public void printGraph() {
+
+    public ArrayList<String> UCS(String src, String target){
+        //NOTE: Graph ini memiliki cost yang sama di semua edge (graph word ladder adalah graph UNWEIGHTED)
+        //karena semua edge memiliki cost yang sama, maka UCS bekerja sama persis dengan Breadth first search
+        //BFS adalah kasus khusus dari UCS di mana semua edge memiliki cost yang sama
+
+        //BFS
+        Queue<String> nodeQueue = new LinkedList<>();
+        ArrayList<String> visitedNodes = new ArrayList<>();
+        HashMap<String,String> parentMap = new HashMap<>();
+        ArrayList<String> path = new ArrayList<>();
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
+            visitedNodes.add(src);
+            nodeQueue.add(src);
+            parentMap.put(src, null);
+            String top = new String();
+            while(!nodeQueue.isEmpty()){
+                top = nodeQueue.poll();
+                BW.write(top);
+                BW.newLine();
+                if(top.equals(target)){
+                    break;
+                }
+                TreeSet<String> neighbors = graph.get(top);
+                for (String neighbor : neighbors) {
+                    if (!visitedNodes.contains(neighbor)) {
+                        visitedNodes.add(neighbor);
+                        nodeQueue.add(neighbor);
+                        parentMap.put(neighbor,top);
+                    }
+                }
+            }
+            
+            if(top.equals(target)){
+                
+                String cur = target;
+                while (cur != null) {
+                    path.add(0, cur); // Prepend to maintain order (source -> target)
+                    cur = parentMap.get(cur);
+                }
+            }
+        } catch (Exception e){
+            e.getStackTrace();
+        }
+        return path;
+    }
+    public void printGraphDebug() {
         for (String word : graph.keySet()) {
           System.out.println("Adjacency list of vertex " + word);
           Iterator set = graph.get(word).iterator();

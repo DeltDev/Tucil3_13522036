@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,12 +16,13 @@ import java.net.URL;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class MainSceneController implements Initializable {
     private Scene scene;
     private Stage stage;
     private Parent root;
-    private int execTime;
+    private long execTime,startTime,endTime;
     private int nodesVisited;
     private String[] MethodList = {"UCS","A*","Greedy Best First Search"};
     @FXML
@@ -51,9 +54,23 @@ public class MainSceneController implements Initializable {
         } else if(!ValidateWord(startingWord, startingWord.length()) || !ValidateWord(endingWord, endingWord.length())){
             ErrorMessage.setText("Kata yang dimasukkan tidak ada di dalam kamus/daftar kata program ini!\nSilakan buka daftar kata untuk melihat daftar kata yang valid.");
         }else {
-            System.out.println(chosenMethod);
-            execTime = 6969;
-            nodesVisited = 420;
+            nodesVisited = 0;
+            startTime = System.currentTimeMillis();
+            ArrayList<String> dictionary = createDictionary(startingWord.length());
+            Graph graph = new Graph(dictionary);
+            if(chosenMethod == "UCS"){
+                System.out.println(graph.UCS(startingWord,endingWord));
+            }
+            
+            try(BufferedReader BR = new BufferedReader(new FileReader("./src/cache/visitednodes.dat"))){
+                while (BR.readLine() != null) {
+                    nodesVisited++;
+                }
+            } catch (Exception ex){
+                ex.getStackTrace();
+            }
+            endTime = System.currentTimeMillis();
+            execTime = endTime - startTime;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("resultscene.fxml"));
             root = loader.load();
             ResultSceneController resController = loader.getController();
@@ -64,7 +81,6 @@ public class MainSceneController implements Initializable {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            System.out.println("Mulai");
         }
     }
 
@@ -101,5 +117,23 @@ public class MainSceneController implements Initializable {
         }
 
         return false;
+    }
+
+    private ArrayList<String> createDictionary(int len){
+        try (BufferedReader BR = new BufferedReader(new FileReader("./src/cache/Length"+Integer.toString(len)+".dat"));){
+            String line;
+            ArrayList<String> arr = new ArrayList<String>();
+            while ((line = BR.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+                arr.add(line);
+            }
+            return arr;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
