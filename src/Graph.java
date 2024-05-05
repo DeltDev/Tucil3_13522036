@@ -101,11 +101,7 @@ public class Graph {
     public ArrayList<String> Astar(String src, String target){
         PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
         HashMap<String,Integer> gVal = new HashMap<>(); // jarak dari start ke node ini
-        HashMap<String, HeuristicNode> cameFrom = new HashMap<>();
         HashSet<String> visited = new HashSet<>();
-        for (String word : dictionary) {
-          cameFrom.put(word, null); // Set predecessor to null initially
-        }
 
         for(String word: dictionary){ //inisialisasi nilai g dari semua node dengan nilai maksimum
             gVal.put(word,Integer.MAX_VALUE);
@@ -125,11 +121,11 @@ public class Graph {
                 if(cur.getWord().equals(target)){ //sudah ketemu
                     //rekonstruksi path dari source
                     ArrayList<String> path = new ArrayList<>();
-                    String curWord = target;
+                    HeuristicNode curNode = cur;
 
-                    while(curWord != null){
-                        path.add(0,curWord);
-                        curWord = cameFrom.get(curWord) != null ? cameFrom.get(curWord).getWord() : null;
+                    while(curNode != null){
+                        path.add(0,curNode.getWord());
+                        curNode = curNode.getParent();
                     }
 
                     return path;
@@ -140,9 +136,10 @@ public class Graph {
 
                     if(newGVal < gVal.get(neighbor)){
                         gVal.put(neighbor, newGVal);
-                        cameFrom.put(neighbor, cur);
                         int newFVal = newGVal + mismatchCounter(neighbor, target);
-                        pq.add(new HeuristicNode(neighbor, newGVal, newFVal));
+                        HeuristicNode neighborNode = new HeuristicNode(neighbor, newGVal, newFVal);
+                        neighborNode.setParent(cur);
+                        pq.add(neighborNode);
                     }
                 }
             }
@@ -166,7 +163,6 @@ public class Graph {
             
             while(!pq.isEmpty()){
                 HeuristicNode cur = pq.poll();
-                System.out.println(cur.getWord());
                 if (visited.contains(cur.getWord())) {
                     continue; // Skip adding node if already visited
                 }
@@ -176,20 +172,20 @@ public class Graph {
                 if(cur.getWord().equals(target)){ //sudah ketemu
                     //rekonstruksi path dari source
                     ArrayList<String> path = new ArrayList<>();
-                    String curWord = target;
-                    HashSet<String> vis = new HashSet<>();
-                    while (curWord != null) {
-                        path.add(0, curWord);
-                        vis.add(curWord);
-                        curWord = cameFrom.get(curWord) != null && !vis.contains(cameFrom.get(curWord).getWord()) ? cameFrom.get(curWord).getWord() : null;
-                      }
+                    HeuristicNode curNode = cur;
+
+                    while(curNode != null){
+                        path.add(0,curNode.getWord());
+                        curNode = curNode.getParent();
+                    }
 
                     return path;
                 }
 
                 for(String neighbor : graph.get(cur.getWord())){
-                    cameFrom.put(neighbor, cur);
-                    pq.add(new HeuristicNode(neighbor, 0, mismatchCounter(neighbor, target)));
+                    HeuristicNode neighborNode = new HeuristicNode(neighbor, 0, mismatchCounter(neighbor, target));
+                    neighborNode.setParent(cur);
+                    pq.add(neighborNode);
                 }
             }
         } catch (Exception e){
@@ -218,11 +214,12 @@ class HeuristicNode {
     private String word;
     private int g; // jarak dari start ke node ini
     private int f; // f = g + nilai heuristik
-
+    private HeuristicNode parent;
     public HeuristicNode(String word, int g, int f) {
         this.word = word;
         this.g = g;
         this.f = f;
+        this.parent = null;
     }
 
     public int getG(){
@@ -235,5 +232,13 @@ class HeuristicNode {
 
     public String getWord(){
         return word;
+    }
+
+    public HeuristicNode getParent(){
+        return parent;
+    }
+
+    public void setParent(HeuristicNode parent){
+        this.parent = parent;
     }
 }
