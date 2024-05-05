@@ -56,12 +56,13 @@ public class MainSceneController implements Initializable {
             startTime = System.currentTimeMillis();
             ArrayList<String> dictionary = createDictionary(startingWord.length());
             Graph graph = new Graph(dictionary,endingWord);
+            ArrayList<String> path = new ArrayList<>();
             if(chosenMethod == "UCS"){
-                System.out.println(graph.UCS(startingWord,endingWord));
+                path = graph.UCS(startingWord,endingWord);
             } else if(chosenMethod == "A*"){
-                System.out.println(graph.Astar(startingWord, endingWord));
+                path = graph.Astar(startingWord,endingWord);
             } else if(chosenMethod == "Greedy Best First Search"){
-                System.out.println(graph.GBFS(startingWord, endingWord));
+                path = graph.GBFS(startingWord,endingWord);
             }
             
             try(BufferedReader BR = new BufferedReader(new FileReader("./src/cache/visitednodes.dat"))){
@@ -79,6 +80,7 @@ public class MainSceneController implements Initializable {
             resController.displayMethod(chosenMethod);
             resController.displayExecTime(execTime);
             resController.displayNodesVisited(nodesVisited);
+            resController.displayPath(path);
             stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

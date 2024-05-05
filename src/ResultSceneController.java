@@ -8,12 +8,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import java.util.*;
 public class ResultSceneController {
     
     @FXML
     Label SearchingMethod,ExecTime,NodesVisited;
-    
+    @FXML
+    ScrollPane scrollPane;
+    @FXML
+    AnchorPane anchorPane;
     public void displayMethod(String chosenMethod){
         SearchingMethod.setText(chosenMethod);
     }
@@ -26,6 +32,15 @@ public class ResultSceneController {
     public void displayNodesVisited(int nodesVisited){
         String output = Integer.toString(nodesVisited);
         NodesVisited.setText(output);
+    }
+
+    public void displayPath(ArrayList<String> path){
+        for (String word : path) {
+            Label label = new Label(word);
+            // Optional: Set preferred height for spacing
+            // label.setPrefHeight(20);  // Adjust spacing as needed
+            anchorPane.getChildren().add(label);
+        }
     }
     private Scene scene;
     private Stage stage;
