@@ -1,4 +1,4 @@
-#Deskripsi Singkat
+# Deskripsi Singkat
 Program ini adalah program yang berfungsi untuk mencari jalur terpendek dalam permainan Word Ladder. Ada 3 pilihan metode pencarian jalur terpendek di program ini, yaitu UCS, A*, dan Greedy Best First Search.
 # Requirements
 1. ```Java ver 19.0.2```
