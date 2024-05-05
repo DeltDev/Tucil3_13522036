@@ -52,6 +52,9 @@ public class MainSceneController implements Initializable {
         } else if(!ValidateWord(startingWord, startingWord.length()) || !ValidateWord(endingWord, endingWord.length())){
             ErrorMessage.setText("Kata yang dimasukkan tidak ada di dalam kamus/daftar kata program ini!\nSilakan buka daftar kata untuk melihat daftar kata yang valid.");
         }else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("resultscene.fxml"));
+            root = loader.load();
+            ResultSceneController resController = loader.getController();
             nodesVisited = 0;
             startTime = System.currentTimeMillis();
             ArrayList<String> dictionary = createDictionary(startingWord.length());
@@ -59,10 +62,13 @@ public class MainSceneController implements Initializable {
             ArrayList<String> path = new ArrayList<>();
             if(chosenMethod == "UCS"){
                 path = graph.UCS(startingWord,endingWord);
+                resController.displayWarning("");
             } else if(chosenMethod == "A*"){
                 path = graph.Astar(startingWord,endingWord);
+                resController.displayWarning("");
             } else if(chosenMethod == "Greedy Best First Search"){
                 path = graph.GBFS(startingWord,endingWord);
+                resController.displayWarning("PERINGATAN: Karena Anda memilih metode Greedy Best First Search, path ini mungkin bukan path terpendek. Gunakan A* atau UCS jika Anda ingin path terpendek.");
             }
             
             try(BufferedReader BR = new BufferedReader(new FileReader("./src/cache/visitednodes.dat"))){
@@ -74,13 +80,13 @@ public class MainSceneController implements Initializable {
             }
             endTime = System.currentTimeMillis();
             execTime = endTime - startTime;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("resultscene.fxml"));
-            root = loader.load();
-            ResultSceneController resController = loader.getController();
+            
+            
             resController.displayMethod(chosenMethod);
             resController.displayExecTime(execTime);
             resController.displayNodesVisited(nodesVisited);
             resController.displayPath(path);
+            resController.displaySummary(startingWord, endingWord, path.size());
             stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
