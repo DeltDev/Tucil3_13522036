@@ -24,11 +24,6 @@
             <Font name="ITCAvantGardeStd-Md" size="24.0" />
          </font>
       </Button>
-      <Button layoutX="1002.0" layoutY="619.0" mnemonicParsing="false" onAction="#GoToWordListScene" text="Daftar Kata">
-         <font>
-            <Font name="ITCAvantGardeStd-Md" size="24.0" />
-         </font>
-      </Button>
       <TextField fx:id="StartingWord" layoutX="52.0" layoutY="321.0" prefHeight="25.0" prefWidth="303.0" />
       <Label layoutX="111.0" layoutY="202.0" text="Kata Awal">
          <font>

@@ -19,14 +19,13 @@ public class Main extends Application {
         stage.show();
         stage.setResizable(false);
     } catch (Exception e){
-        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
     
   }
 
   @Override
   public void stop(){
-    System.out.println("Window ditutup");
     File dir = new File("./src/cache");
     DictionaryController.deleteFilesInDirectory(dir);
   }
