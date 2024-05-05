@@ -9,33 +9,35 @@ import java.util.*;
  
 public class Graph {
 
-    HashMap<String, TreeSet<String> > graph;
-    HashMap<String, Integer> graphHeuristicValues;
+    HashMap<String, TreeSet<String> > graph; //Representasi graf dalam bentuk adjacency list
+    HashMap<String, Integer> graphHeuristicValues; //nilai heuristic untuk A* dan GBFS
     private ArrayList<String> dictionary; //dijamin panjang semua string sama
-    public Graph(ArrayList<String> dict,String dest)
+    public Graph(ArrayList<String> dict,String dest) //KONSTRUKTOR
     {
         graph = new HashMap<>();
         graphHeuristicValues = new HashMap<>();
-        dictionary = dict;
+        dictionary = dict; 
         for (String word : dictionary) {
-            graph.put(word, new TreeSet<>());
-            graphHeuristicValues.put(word, mismatchCounter(word, dest));
+            graph.put(word, new TreeSet<>()); //taruh semua kata ke graf (belum disambung)
+            graphHeuristicValues.put(word, mismatchCounter(word, dest)); //heuristik yang digunakan di graf ini adalah banyak huruf yang BERBEDA dari suatu kata dengan kata akhir
         }
-        constructGraph();
+        constructGraph(); //sambungkan graf
     }
-    public void addEdge(String src, String dest)
+    public void addEdge(String src, String dest) //method untuk menyambung antar dua node
     {
+        //perhatikan bahwa problem word ladder adalah graf UNWEIGHTED dan UNDIRECTED
         graph.get(src).add(dest);
         graph.get(dest).add(src);
     }
-    public void deleteGraph(){
+    public void deleteGraph(){ //hapus graf
         graph = new HashMap<>();
         dictionary = new ArrayList<>();
     }
-    private void constructGraph() {
+    private void constructGraph() { //sambungkan graf
         for (String word1 : dictionary) {
             for (String word2 : dictionary) {
                 if (word1 != word2 && mismatchCounter(word1, word2) == 1) {
+                    //sambungkan graf jika kata tidak sama dan banyak huruf yang berbeda antara KATA 1 dan KATA 2 adalah 1
                     addEdge(word1, word2);
                 }
             }
@@ -43,6 +45,8 @@ public class Graph {
     }
 
     private int mismatchCounter(String s1, String s2){
+        //ini adalah fungsi heuristik yang digunakan untuk A* dan GBFS
+        //fungsi ini menghitung banyak huruf yang berbeda antara s1 dan s2
         int mismatch = 0;
         for(int i = 0; i<s1.length(); i++){
             if(s1.charAt(i) != s2.charAt(i)){
@@ -60,47 +64,48 @@ public class Graph {
         //BFS
         Queue<String> nodeQueue = new LinkedList<>();
         ArrayList<String> visitedNodes = new ArrayList<>();
-        HashMap<String,String> parentMap = new HashMap<>();
+        HashMap<String,String> parentMap = new HashMap<>(); //map yang menunjukkan relasi (A dan B, B adalah parent dari A)
         ArrayList<String> path = new ArrayList<>();
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
-            visitedNodes.add(src);
-            nodeQueue.add(src);
-            parentMap.put(src, null);
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){ //catat ke visitednodes.dat di folder cache
+            visitedNodes.add(src); //tandai sudah dikunjungi
+            nodeQueue.add(src); //masukkan ke queue
+            parentMap.put(src, null); //node awal tidak punya parent
             String top = new String();
-            while(!nodeQueue.isEmpty()){
-                top = nodeQueue.poll();
-                BW.write(top);
-                BW.newLine();
-                if(top.equals(target)){
+            while(!nodeQueue.isEmpty()){//selama queue tidak kosong
+                top = nodeQueue.poll(); //dapatkan node yang paling depan di queue
+                BW.write(top); //tulis ke visitednodes.dat
+                BW.newLine(); //tulis newline ke visitednodes.dat
+                if(top.equals(target)){ //hentikan pencarian jika elemen terdepan queue = kata akhir
                     break;
                 }
-                TreeSet<String> neighbors = graph.get(top);
+                TreeSet<String> neighbors = graph.get(top); //dapatkan semua neighbor dari node terdepan queue
                 for (String neighbor : neighbors) {
-                    if (!visitedNodes.contains(neighbor)) {
-                        visitedNodes.add(neighbor);
-                        nodeQueue.add(neighbor);
-                        parentMap.put(neighbor,top);
+                    if (!visitedNodes.contains(neighbor)) { //jika neighbor yang diperiksa belum dikunjungi
+                        visitedNodes.add(neighbor); //tandai sudah dikunjungi
+                        nodeQueue.add(neighbor);//masukkan ke queue
+                        parentMap.put(neighbor,top); //node terdepan saat ini adalah parent dari neighbor
                     }
                 }
             }
             
-            if(top.equals(target)){
-                
+            if(top.equals(target)){ //jika path ditemukan
+                //rekonstruksi path yang dicari dari belakang (target)
                 String cur = target;
                 while (cur != null) {
-                    path.add(0, cur); // Prepend to maintain order (source -> target)
-                    cur = parentMap.get(cur);
+                    path.add(0, cur); //tambahkan node yang ditandai sekarang ke path dari depan
+                    cur = parentMap.get(cur); //pindahkan tanda ke parentnya
                 }
             }
         } catch (Exception e){
             e.getStackTrace();
         }
-        return path;
+        return path; //kembalikan pathnya
     }
 
     public ArrayList<String> Astar(String src, String target){
+        //Algoritma A*
         PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
-        HashMap<String,Integer> gVal = new HashMap<>(); // jarak dari start ke node ini
+        HashMap<String,Integer> gVal = new HashMap<>(); // g adalah cost:jarak dari node saat ini ke start
         HashSet<String> visited = new HashSet<>();
 
         for(String word: dictionary){ //inisialisasi nilai g dari semua node dengan nilai maksimum
@@ -108,38 +113,39 @@ public class Graph {
         }
         try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
             gVal.put(src, 0); //jarak dari start ke dirinya sendiri adalah 0
-            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
+            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target))); //buat node baru dengan
 
             while(!pq.isEmpty()){
-                HeuristicNode cur = pq.poll();
-                if (visited.contains(cur.getWord())) {
-                    continue; // Skip adding node if already visited
+                HeuristicNode cur = pq.poll();//dapatkan node yang terletak di depan priority queue
+                if (visited.contains(cur.getWord())) { //lewati node saat ini jika sudah pernah dikunjungi
+                    continue;
                 }
-                visited.add(cur.getWord());
-                BW.write(cur.getWord());
+                visited.add(cur.getWord());//tandai sudah dikunjungi
+                BW.write(cur.getWord());//tulis ke visitednodes.dat
                 BW.newLine();
-                if(cur.getWord().equals(target)){ //sudah ketemu
-                    //rekonstruksi path dari source
+                if(cur.getWord().equals(target)){ //jika sudah ketemu
+                    //rekonstruksi path dari source dilakukan secar mundur dari target
                     ArrayList<String> path = new ArrayList<>();
                     HeuristicNode curNode = cur;
 
                     while(curNode != null){
-                        path.add(0,curNode.getWord());
-                        curNode = curNode.getParent();
+                        path.add(0,curNode.getWord());//tambahkan node dari depan
+                        curNode = curNode.getParent(); //lanjut ke parent dari node saat ini
                     }
 
-                    return path;
+                    return path;//kembalikan path
                 }
 
                 for(String neighbor : graph.get(cur.getWord())){
-                    int newGVal = gVal.get(cur.getWord()) + 1; //semua cost edgenya bisa dianggap 1 karena ini adalah problem graf unweighted
+                    int newGVal = gVal.get(cur.getWord()) + 1; //semua cost edgenya bisa dianggap 1 karena ini adalah problem graf unweighted, jadi cukup tambahkan g(x) baru dengan 1
 
-                    if(newGVal < gVal.get(neighbor)){
-                        gVal.put(neighbor, newGVal);
-                        int newFVal = newGVal + mismatchCounter(neighbor, target);
-                        HeuristicNode neighborNode = new HeuristicNode(neighbor, newGVal, newFVal);
-                        neighborNode.setParent(cur);
-                        pq.add(neighborNode);
+                    if(newGVal < gVal.get(neighbor)){ //jika cost yang baru lebih rendah dari cost tetangganya
+                        gVal.put(neighbor, newGVal);//ganti nilai g dari tetangganya saat ini dengan nilai g yang baru dihitung
+                        int newFVal = newGVal + mismatchCounter(neighbor, target); //F(x) = G(x) + H(x) H(x) adalah nilai heuristik
+                        //nilai heuristik yang digunakan adalah banyak huruf yang berbeda dari neighbor saat ini dengan string tujuan
+                        HeuristicNode neighborNode = new HeuristicNode(neighbor, newGVal, newFVal); //buat node baru dengan nama neighbor saat ini dan dengan nilai G baru dan F baru
+                        neighborNode.setParent(cur); //parent dari neighbor node adalah node saat ini
+                        pq.add(neighborNode); //masukkan node tetangga ke priority queue
                     }
                 }
             }
@@ -153,10 +159,7 @@ public class Graph {
     public ArrayList<String> GBFS(String src, String target){
         PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
         HashSet<String> visited = new HashSet<>();
-        HashMap<String, HeuristicNode> cameFrom = new HashMap<>();
-        for (String word : dictionary) {
-          cameFrom.put(word, null); // Set predecessor to null initially
-        }
+
 
         try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
             pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
@@ -164,7 +167,7 @@ public class Graph {
             while(!pq.isEmpty()){
                 HeuristicNode cur = pq.poll();
                 if (visited.contains(cur.getWord())) {
-                    continue; // Skip adding node if already visited
+                    continue;
                 }
                 visited.add(cur.getWord());
                 BW.write(cur.getWord());
@@ -211,10 +214,10 @@ public class Graph {
 }
  
 class HeuristicNode {
-    private String word;
+    private String word; //kata yang disimpan oleh node
     private int g; // jarak dari start ke node ini
     private int f; // f = g + nilai heuristik
-    private HeuristicNode parent;
+    private HeuristicNode parent; //parent dari node ini
     public HeuristicNode(String word, int g, int f) {
         this.word = word;
         this.g = g;
