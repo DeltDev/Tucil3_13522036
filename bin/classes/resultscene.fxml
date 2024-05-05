@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="720.0" prefWidth="1280.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ResultSceneController">
+  <content>
+    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="10000.0" prefWidth="1280.0">
+         <children>
+            <Button layoutX="25.0" layoutY="17.0" mnemonicParsing="false" onAction="#GoToMainScene" text="Kembali">
+               <font>
+                  <Font name="ITCAvantGardeStd-Md" size="24.0" />
+               </font>
+            </Button>
+            <Label layoutX="591.0" layoutY="17.0" text="Hasil">
+               <font>
+                  <Font name="Segoe UI Bold" size="42.0" />
+               </font>
+            </Label>
+            <Label layoutX="36.0" layoutY="87.0" text="Metode Pencarian:">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="SearchingMethod" layoutX="36.0" layoutY="128.0" text="Ganti Metode Pencarian">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="530.0" layoutY="87.0" text="Waktu Eksekusi: ">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="ExecTime" layoutX="530.0" layoutY="128.0" text="Ganti waktu eksekusi">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="939.0" layoutY="79.0" text="Banyak Node yang dikunjungi:">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="NodesVisited" layoutX="939.0" layoutY="120.0" text="Ganti Banyak Node">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="GBFSWarning" layoutX="16.0" layoutY="169.0" text="PERINGATAN: Karena Anda memilih metode Greedy Best First Search, path ini mungkin bukan path terpendek. Gunakan A* atau UCS jika Anda ingin path terpendek." textFill="RED">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="36.0" layoutY="199.0" text="Path yang dicari:">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="PathStart" layoutX="36.0" layoutY="226.0" text="Ganti rangkuman path" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="PathStart1" layoutX="36.0" layoutY="250.0" text="                   |">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="PathStart11" layoutX="37.0" layoutY="274.0" text="                  V">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="PathEnd" layoutX="36.0" layoutY="298.0" text="Ganti rangkuman path" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="939.0" layoutY="211.0" text="Panjang Path:">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="PathLength" layoutX="939.0" layoutY="250.0" text="Ganti Panjang Path">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
