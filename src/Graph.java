@@ -62,7 +62,7 @@ public class Graph {
         ArrayList<String> visitedNodes = new ArrayList<>();
         HashMap<String,String> parentMap = new HashMap<>();
         ArrayList<String> path = new ArrayList<>();
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/UCSvisitednodes.dat"))){
             visitedNodes.add(src);
             nodeQueue.add(src);
             parentMap.put(src, null);
@@ -102,6 +102,7 @@ public class Graph {
         PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
         HashMap<String,Integer> gVal = new HashMap<>(); // jarak dari start ke node ini
         HashMap<String, HeuristicNode> cameFrom = new HashMap<>();
+        HashSet<String> visited = new HashSet<>();
         for (String word : dictionary) {
           cameFrom.put(word, null); // Set predecessor to null initially
         }
@@ -109,12 +110,16 @@ public class Graph {
         for(String word: dictionary){ //inisialisasi nilai g dari semua node dengan nilai maksimum
             gVal.put(word,Integer.MAX_VALUE);
         }
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/Astarvisitednodes.dat"))){        
             gVal.put(src, 0); //jarak dari start ke dirinya sendiri adalah 0
             pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
 
             while(!pq.isEmpty()){
                 HeuristicNode cur = pq.poll();
+                if (visited.contains(cur.getWord())) {
+                    continue; // Skip adding node if already visited
+                }
+                visited.add(cur.getWord());
                 BW.write(cur.getWord());
                 BW.newLine();
                 if(cur.getWord().equals(target)){ //sudah ketemu
@@ -146,6 +151,51 @@ public class Graph {
         }
 
         return new ArrayList<>(); //jawabannya tidak ada karena pathnya tidak ditemukan
+    }
+
+    public ArrayList<String> GBFS(String src, String target){
+        PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
+        HashSet<String> visited = new HashSet<>();
+        HashMap<String, HeuristicNode> cameFrom = new HashMap<>();
+        for (String word : dictionary) {
+          cameFrom.put(word, null); // Set predecessor to null initially
+        }
+
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/GBFSvisitednodes.dat"))){        
+            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
+            
+            while(!pq.isEmpty()){
+                HeuristicNode cur = pq.poll();
+                System.out.println(cur.getWord());
+                if (visited.contains(cur.getWord())) {
+                    continue; // Skip adding node if already visited
+                }
+                visited.add(cur.getWord());
+                BW.write(cur.getWord());
+                BW.newLine();
+                if(cur.getWord().equals(target)){ //sudah ketemu
+                    //rekonstruksi path dari source
+                    ArrayList<String> path = new ArrayList<>();
+                    String curWord = target;
+                    HashSet<String> vis = new HashSet<>();
+                    while (curWord != null) {
+                        path.add(0, curWord);
+                        vis.add(curWord);
+                        curWord = cameFrom.get(curWord) != null && !vis.contains(cameFrom.get(curWord).getWord()) ? cameFrom.get(curWord).getWord() : null;
+                      }
+
+                    return path;
+                }
+
+                for(String neighbor : graph.get(cur.getWord())){
+                    cameFrom.put(neighbor, cur);
+                    pq.add(new HeuristicNode(neighbor, 0, mismatchCounter(neighbor, target)));
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
     public void printGraphDebug() {
         for (String word : graph.keySet()) {

@@ -18,6 +18,7 @@ public class GraphUnitTest {
             graph.printGraphDebug();
             System.out.println(graph.UCS("mozz", "jump"));
             System.out.println(graph.Astar("mozz", "jump"));
+            System.out.println(graph.GBFS("mozz", "jump"));
         } catch (Exception e){
             e.printStackTrace();
         }
