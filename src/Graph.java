@@ -62,7 +62,7 @@ public class Graph {
         ArrayList<String> visitedNodes = new ArrayList<>();
         HashMap<String,String> parentMap = new HashMap<>();
         ArrayList<String> path = new ArrayList<>();
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/UCSvisitednodes.dat"))){
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
             visitedNodes.add(src);
             nodeQueue.add(src);
             parentMap.put(src, null);
@@ -106,7 +106,7 @@ public class Graph {
         for(String word: dictionary){ //inisialisasi nilai g dari semua node dengan nilai maksimum
             gVal.put(word,Integer.MAX_VALUE);
         }
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/Astarvisitednodes.dat"))){        
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
             gVal.put(src, 0); //jarak dari start ke dirinya sendiri adalah 0
             pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
 
@@ -158,7 +158,7 @@ public class Graph {
           cameFrom.put(word, null); // Set predecessor to null initially
         }
 
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/GBFSvisitednodes.dat"))){        
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
             pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
             
             while(!pq.isEmpty()){

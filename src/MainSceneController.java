@@ -60,6 +60,8 @@ public class MainSceneController implements Initializable {
                 System.out.println(graph.UCS(startingWord,endingWord));
             } else if(chosenMethod == "A*"){
                 System.out.println(graph.Astar(startingWord, endingWord));
+            } else if(chosenMethod == "Greedy Best First Search"){
+                System.out.println(graph.GBFS(startingWord, endingWord));
             }
             
             try(BufferedReader BR = new BufferedReader(new FileReader("./src/cache/visitednodes.dat"))){
