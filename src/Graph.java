@@ -157,20 +157,21 @@ public class Graph {
     }
 
     public ArrayList<String> GBFS(String src, String target){
+        //Nilai F dari GBFS hanyalah nilai heuristik node yang bersangkutan dan G pasti sama dengan 0
+        //Nilai heuristik adalah banyak huruf yang berbeda dari kata suatu node dengan node tujuan
         PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
         HashSet<String> visited = new HashSet<>();
 
 
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
-            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
-            
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){//catat semua node yang dikunjungi
+            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));//tambahkan node baru ke priority queue
             while(!pq.isEmpty()){
-                HeuristicNode cur = pq.poll();
-                if (visited.contains(cur.getWord())) {
+                HeuristicNode cur = pq.poll();// dapatkan node paling depan
+                if (visited.contains(cur.getWord())) { //lewati node paling depan sekarang jika sudah pernah dikunjungi
                     continue;
                 }
-                visited.add(cur.getWord());
-                BW.write(cur.getWord());
+                visited.add(cur.getWord()); //tandai node saat ini sudah dikunjungi
+                BW.write(cur.getWord()); //tulis node saat ini ke visitednodes.dat
                 BW.newLine();
                 if(cur.getWord().equals(target)){ //sudah ketemu
                     //rekonstruksi path dari source
@@ -178,17 +179,19 @@ public class Graph {
                     HeuristicNode curNode = cur;
 
                     while(curNode != null){
-                        path.add(0,curNode.getWord());
-                        curNode = curNode.getParent();
+                        path.add(0,curNode.getWord()); //tambahkan node dari depan
+                        curNode = curNode.getParent();  //lanjut ke parent dari node saat ini
                     }
 
-                    return path;
+                    return path; //kembalikan path saat ini
                 }
 
-                for(String neighbor : graph.get(cur.getWord())){
+                for(String neighbor : graph.get(cur.getWord())){ //cek semua tetangga dari node saat ini
                     HeuristicNode neighborNode = new HeuristicNode(neighbor, 0, mismatchCounter(neighbor, target));
+                    //buat node baru dengan g = 0 (karena tidak digunakan di GBF)
                     neighborNode.setParent(cur);
-                    pq.add(neighborNode);
+                    //parent dari tetangga saat ini adalah node saat ini
+                    pq.add(neighborNode); //masukkan node tetangga ke priority queue
                 }
             }
         } catch (Exception e){
@@ -196,7 +199,7 @@ public class Graph {
         }
         return new ArrayList<>();
     }
-    public void printGraphDebug() {
+    public void printGraphDebug() { //hanya untuk debug, print semua adjacency list
         for (String word : graph.keySet()) {
           System.out.println("Adjacency list of vertex " + word);
           Iterator<String> set = graph.get(word).iterator();
@@ -205,8 +208,6 @@ public class Graph {
             String neighbor = set.next();
             System.out.print(neighbor + " ("+graphHeuristicValues.get(neighbor)+") ");
           }
-            
-      
           System.out.println();
           System.out.println();
         }
