@@ -14,7 +14,7 @@ public class GraphUnitTest {
                 }
                 arr.add(line);
             }
-            Graph graph = new Graph(arr);
+            Graph graph = new Graph(arr,"fart");
             graph.printGraphDebug();
             System.out.println(graph.UCS("port", "fart"));
         } catch (Exception e){

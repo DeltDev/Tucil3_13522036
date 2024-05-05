@@ -10,13 +10,16 @@ import java.util.*;
 public class Graph {
 
     HashMap<String, TreeSet<String> > graph;
+    HashMap<String, Integer> graphHeuristicValues;
     private ArrayList<String> dictionary; //dijamin panjang semua string sama
-    public Graph(ArrayList<String> dict)
+    public Graph(ArrayList<String> dict,String dest)
     {
         graph = new HashMap<>();
+        graphHeuristicValues = new HashMap<>();
         dictionary = dict;
         for (String word : dictionary) {
             graph.put(word, new TreeSet<>());
+            graphHeuristicValues.put(word, mismatchCounter(word, dest));
         }
         constructGraph();
     }
@@ -59,7 +62,7 @@ public class Graph {
         ArrayList<String> visitedNodes = new ArrayList<>();
         HashMap<String,String> parentMap = new HashMap<>();
         ArrayList<String> path = new ArrayList<>();
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/visitednodes.dat"))){
             visitedNodes.add(src);
             nodeQueue.add(src);
             parentMap.put(src, null);
@@ -101,10 +104,13 @@ public class Graph {
     public void printGraphDebug() {
         for (String word : graph.keySet()) {
           System.out.println("Adjacency list of vertex " + word);
-          Iterator set = graph.get(word).iterator();
+          Iterator<String> set = graph.get(word).iterator();
       
-          while (set.hasNext())
-            System.out.print(set.next() + " ");
+          while (set.hasNext()){
+            String neighbor = set.next();
+            System.out.print(neighbor + " ("+graphHeuristicValues.get(neighbor)+") ");
+          }
+            
       
           System.out.println();
           System.out.println();
