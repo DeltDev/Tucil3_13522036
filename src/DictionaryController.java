@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class DictionaryController {
    
     public static void SplitDictionary(){
+        //Fungsi ini berfungsi untuk membuat cache dictionary yang dipisahkan berdasarkan panjang/banyak hurufnya ke file .dat nya masing-masing
         HashMap<Integer, ArrayList<String>> dictLength = new HashMap<>();
     
         try {
@@ -48,6 +49,7 @@ public class DictionaryController {
 
 
     public static void deleteFilesInDirectory(File directory) {
+        //menghapus semua file yang berada di src/cache kecuali .gitkeep (agar folder cache tidak hilang di repository)
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
                 if (file.isFile() && !file.getName().equals(".gitkeep")) {

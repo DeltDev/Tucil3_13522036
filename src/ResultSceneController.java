@@ -14,7 +14,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import java.util.*;
 import javafx.scene.paint.Color;
-public class ResultSceneController {
+public class ResultSceneController { //Class untuk mengendalikan semua hal yang ada di scene hasil pencarian path
     
     @FXML
     Label SearchingMethod,ExecTime,NodesVisited,GBFSWarning,PathStart,PathEnd,PathLength;
@@ -22,30 +22,31 @@ public class ResultSceneController {
     ScrollPane scrollPane;
     @FXML
     AnchorPane anchorPane;
-    public void displaySummary(String start, String end, int length){
-        PathStart.setText(start);
-        PathEnd.setText(end);
-        PathLength.setText(Integer.toString(length));
+    public void displaySummary(String start, String end, int length){ //tampilkan rangkuman pencarian
+        PathStart.setText(start); //tampilkan kata awal
+        PathEnd.setText(end); //tampilkan kata akhir
+        PathLength.setText(Integer.toString(length)); //tampilkan panjang path yang ditemukan
     }
     public void displayMethod(String chosenMethod){
-        SearchingMethod.setText(chosenMethod);
+        SearchingMethod.setText(chosenMethod); //tampilkan algoritma yang dipilih
     }
 
     public void displayExecTime(long execTime){
         String output = Long.toString(execTime) + " ms";
-        ExecTime.setText(output);
+        ExecTime.setText(output); //tampilkan waktu eksekusi program
     }
 
     public void displayNodesVisited(int nodesVisited){
         String output = Integer.toString(nodesVisited);
-        NodesVisited.setText(output);
+        NodesVisited.setText(output); //tampilkan banyak node yang dikunjungi selama proses pencarian
     }
     public void displayWarning(String str){
-        GBFSWarning.setText(str);
+        GBFSWarning.setText(str); //tampilkan warning jika algoritma yang dipilih adalah GBFS
     }
     public void displayPath(ArrayList<String> path){
+        //tampilkan path yang ditemukan
         double LayoutYVal = 200;
-        if(path.size() == 0){//path tidak ditemukan
+        if(path.size() == 0){//handling path yang tidak ditemukan
             Label label = new Label("Path tidak ditemukan!");
             label.setFont(new Font("Segoe UI",36));
             label.setLayoutX(500);
@@ -53,7 +54,7 @@ public class ResultSceneController {
             label.setTextAlignment(TextAlignment.CENTER);
             label.setTextFill(Color.RED);
             anchorPane.getChildren().add(label);
-        } else {
+        } else { //handling path yang ditemukan
             for (String word : path) {
                 Label label = new Label(word);
                 label.setFont(new Font("Segoe UI",36));
