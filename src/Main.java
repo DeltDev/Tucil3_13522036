@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import java.io.File;
+import javafx.scene.image.Image;
 public class Main extends Application {
 
   @Override
@@ -16,8 +17,11 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.setTitle("Word Ladder Solver");
+        Image icon = new Image("Word Ladder Logo.png");
+        stage.getIcons().add(icon);
         stage.setResizable(false);
+        stage.show();
     } catch (Exception e){
         e.printStackTrace();
     }
