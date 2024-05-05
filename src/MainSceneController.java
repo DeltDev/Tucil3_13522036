@@ -55,9 +55,11 @@ public class MainSceneController implements Initializable {
             nodesVisited = 0;
             startTime = System.currentTimeMillis();
             ArrayList<String> dictionary = createDictionary(startingWord.length());
-            Graph graph = new Graph(dictionary);
+            Graph graph = new Graph(dictionary,endingWord);
             if(chosenMethod == "UCS"){
                 System.out.println(graph.UCS(startingWord,endingWord));
+            } else if(chosenMethod == "A*"){
+                System.out.println(graph.Astar(startingWord, endingWord));
             }
             
             try(BufferedReader BR = new BufferedReader(new FileReader("./src/cache/visitednodes.dat"))){

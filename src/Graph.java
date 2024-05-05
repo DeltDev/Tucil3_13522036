@@ -62,7 +62,7 @@ public class Graph {
         ArrayList<String> visitedNodes = new ArrayList<>();
         HashMap<String,String> parentMap = new HashMap<>();
         ArrayList<String> path = new ArrayList<>();
-        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./cache/visitednodes.dat"))){
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){
             visitedNodes.add(src);
             nodeQueue.add(src);
             parentMap.put(src, null);
@@ -99,7 +99,53 @@ public class Graph {
     }
 
     public ArrayList<String> Astar(String src, String target){
-        return new ArrayList<>();
+        PriorityQueue<HeuristicNode> pq = new PriorityQueue<>((n1,n2) -> n1.getF() - n2.getF()); //prioritasnya adalah node dengan nilai f yang terkecil di depan
+        HashMap<String,Integer> gVal = new HashMap<>(); // jarak dari start ke node ini
+        HashMap<String, HeuristicNode> cameFrom = new HashMap<>();
+        for (String word : dictionary) {
+          cameFrom.put(word, null); // Set predecessor to null initially
+        }
+
+        for(String word: dictionary){ //inisialisasi nilai g dari semua node dengan nilai maksimum
+            gVal.put(word,Integer.MAX_VALUE);
+        }
+        try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
+            gVal.put(src, 0); //jarak dari start ke dirinya sendiri adalah 0
+            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target)));
+
+            while(!pq.isEmpty()){
+                HeuristicNode cur = pq.poll();
+                BW.write(cur.getWord());
+                BW.newLine();
+                if(cur.getWord().equals(target)){ //sudah ketemu
+                    //rekonstruksi path dari source
+                    ArrayList<String> path = new ArrayList<>();
+                    String curWord = target;
+
+                    while(curWord != null){
+                        path.add(0,curWord);
+                        curWord = cameFrom.get(curWord) != null ? cameFrom.get(curWord).getWord() : null;
+                    }
+
+                    return path;
+                }
+
+                for(String neighbor : graph.get(cur.getWord())){
+                    int newGVal = gVal.get(cur.getWord()) + 1; //semua cost edgenya bisa dianggap 1 karena ini adalah problem graf unweighted
+
+                    if(newGVal < gVal.get(neighbor)){
+                        gVal.put(neighbor, newGVal);
+                        cameFrom.put(neighbor, cur);
+                        int newFVal = newGVal + mismatchCounter(neighbor, target);
+                        pq.add(new HeuristicNode(neighbor, newGVal, newFVal));
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>(); //jawabannya tidak ada karena pathnya tidak ditemukan
     }
     public void printGraphDebug() {
         for (String word : graph.keySet()) {
@@ -118,3 +164,26 @@ public class Graph {
       }
 }
  
+class HeuristicNode {
+    private String word;
+    private int g; // jarak dari start ke node ini
+    private int f; // f = g + nilai heuristik
+
+    public HeuristicNode(String word, int g, int f) {
+        this.word = word;
+        this.g = g;
+        this.f = f;
+    }
+
+    public int getG(){
+        return g;
+    }
+
+    public int getF(){
+        return f;
+    }
+
+    public String getWord(){
+        return word;
+    }
+}

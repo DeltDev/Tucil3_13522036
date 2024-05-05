@@ -16,7 +16,8 @@ public class GraphUnitTest {
             }
             Graph graph = new Graph(arr,"fart");
             graph.printGraphDebug();
-            System.out.println(graph.UCS("port", "fart"));
+            System.out.println(graph.UCS("mozz", "jump"));
+            System.out.println(graph.Astar("mozz", "jump"));
         } catch (Exception e){
             e.printStackTrace();
         }
