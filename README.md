@@ -4,6 +4,13 @@ Program ini adalah program yang berfungsi untuk mencari jalur terpendek dalam pe
 1. ```Java ver 19.0.2```
 2. ```JavaFX SDK ver 22.0.1``` unduh di [sini](https://openjfx.io/)
 
+# Cara Menggunakan Program
+1. Anda **WAJIB** mengunduh JavaFX SDK versi 22.0.1 terlebih dahulu di situs yang sudah diberikan di [Requirements](#Requirements), karena SDK ini diperlukan untuk menjalankan program ini.
+2. Setelah mengunduh JavaFX SDK, unzip file JavaFX SDK tersebut di direktori bebas.
+3. Ketik ```java --module-path "Direktori JavaFX SDK yang sudah diunzip sampai ke folder lib yang terletak di dalam folder javafx-sdk-22.0.1" --add-modules=javafx.controls,javafx.fxml -jar bin/app/WordLadderSolver.jar``` ke terminal di direktori root repository ini.
+Untuk lebih jelasnya, misalkan jika Anda melakukan unzip file JavaFX SDK di dalam folder ```D:\Java Development```, maka buka terminal/command prompt/powershell **DI DALAM FOLDER ROOT REPOSITORY INI**, lalu perintah yang Anda tuliskan ke dalam terminal adalah ```java --module-path "D:\Java Development\openjfx-22.0.1_windows-x64_bin-sdk\javafx-sdk-22.0.1\lib" --add-modules=javafx.controls,javafx.fxml -jar bin/app/WordLadderSolver.jar```. Direktori yang di salin harus sampai ke folder lib.
+4. Ikuti input yang disediakan oleh program. Jika invalid, pencarian path tidak akan dimulai. Jika input Anda valid, maka hasil penunjukkan path akan diperlihatkan ke dalam GUI.
+5. Anda boleh mengubah isi ```dictionary.txt``` yang berada di dalam src/dictionary dengan syarat **semua huruf dalam suatu kata wajib dalam huruf kecil dan kata baru akan dianggap sebagai kata yang berbeda oleh program jika Anda menulis kata tersebut di baris baru**.
 # Tentang Pembuat Program
 | Nama          | NIM    | Kelas Strategi Algoritma|
 | --------------|--------| ----|
