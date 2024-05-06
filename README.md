@@ -15,7 +15,7 @@ Program ini adalah program yang berfungsi untuk mencari jalur terpendek dalam pe
 7. **DILARANG MENGHAPUS FILE APAPUN DI FOLDER BIN KARENA DIPERLUKAN UNTUK RUN PROGRAM INI**.
 8. **JANGAN TUTUP COMMAND PROMPT/ POWERSHELL/ TERMINAL SAAT MENJALANKAN PROGRAM INI**
 # Cara Menggunakan Program
-1. [Jalankan Program ini terlebih dahulu](#Cara_Menjalankan_Program)
+1. [Jalankan Program ini terlebih dahulu](#Cara Menjalankan Program)
 2. Di layar komputer Anda akan ditampilkan layar landing dengan tombol mulai di bawahnya. Klik tombol tersebut untuk mulai menggunakan program.
 3. Input kata awal dan kata akhir. Input kata bersifat **CASE INSENSITIVE**.
 4. Anda **wajib** memilih salah satu dari 3 algoritma pencarian (UCS,A*,Greedy Best First Search) dari dropdown yang berada di tengah.
