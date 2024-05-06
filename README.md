@@ -11,10 +11,11 @@ Program ini adalah program yang berfungsi untuk mencari jalur terpendek dalam pe
 <br>Untuk lebih jelasnya, misalkan jika Anda melakukan unzip file JavaFX SDK di dalam folder ```D:\Java Development```, maka buka terminal/command prompt/powershell **DI DALAM FOLDER ROOT REPOSITORY INI**, lalu perintah yang Anda tuliskan ke dalam terminal adalah ```java --module-path "D:\Java Development\openjfx-22.0.1_windows-x64_bin-sdk\javafx-sdk-22.0.1\lib" --add-modules=javafx.controls,javafx.fxml -jar bin/app/WordLadderSolver.jar```. Direktori yang di salin harus sampai ke folder lib.
 4. Ikuti input yang disediakan oleh program. Jika input invalid, pencarian path tidak akan dimulai. Jika input Anda valid, maka hasil penunjukkan path akan diperlihatkan ke dalam GUI.
 5. Anda boleh mengubah isi ```dictionary.txt``` yang berada di dalam src/dictionary dengan syarat **semua huruf dalam suatu kata wajib dalam huruf kecil dan kata baru akan dianggap sebagai kata yang berbeda oleh program jika Anda menulis kata tersebut di baris baru**.
-6. **DILARANG MENGHAPUS FOLDER SRC/CACHE BESERTA FILE .GITKEEP (.gitkeep hanya berfungsi agar folder cache tidak hilang di repository ini) YANG BERADA DI DALAMNYA KARENA PROGRAM INI MEMERLUKAN FOLDER TERSEBUT UNTUK PEMROSESAN PATH.**
-7. **DILARANG MENGHAPUS FILE .DAT APAPUN YANG DIBUAT OLEH PROGRAM INI DI DALAM FOLDER SRC/CACHE SAAT PROGRAM SEDANG BERJALAN KARENA PROGRAM INI MEMBUTUHKAN SEMUA FILE .DAT (kecuali .gitkeep) YANG BERADA DI DALAM FOLDER TERSEBUT UNTUK PENCARIAN PATH**. <br> Keterangan: semua file .dat akan terhapus secara otomatis jika Anda menutup program ini
-8. **DILARANG MENGHAPUS FILE APAPUN DI FOLDER BIN KARENA DIPERLUKAN UNTUK RUN PROGRAM INI**.
-9. **JANGAN TUTUP COMMAND PROMPT/ POWERSHELL/ TERMINAL SAAT MENJALANKAN PROGRAM INI**
+6. Input kata awal dan akhir yang dimasukkan bersifat **CASE INSENSITIVE**
+7. **DILARANG MENGHAPUS FOLDER SRC/CACHE BESERTA FILE .GITKEEP (.gitkeep hanya berfungsi agar folder cache tidak hilang di repository ini) YANG BERADA DI DALAMNYA KARENA PROGRAM INI MEMERLUKAN FOLDER TERSEBUT UNTUK PEMROSESAN PATH.**
+8. **DILARANG MENGHAPUS FILE .DAT APAPUN YANG DIBUAT OLEH PROGRAM INI DI DALAM FOLDER SRC/CACHE SAAT PROGRAM SEDANG BERJALAN KARENA PROGRAM INI MEMBUTUHKAN SEMUA FILE .DAT (kecuali .gitkeep) YANG BERADA DI DALAM FOLDER TERSEBUT UNTUK PENCARIAN PATH**. <br> Keterangan: semua file .dat akan terhapus secara otomatis jika Anda menutup program ini
+9. **DILARANG MENGHAPUS FILE APAPUN DI FOLDER BIN KARENA DIPERLUKAN UNTUK RUN PROGRAM INI**.
+10. **JANGAN TUTUP COMMAND PROMPT/ POWERSHELL/ TERMINAL SAAT MENJALANKAN PROGRAM INI**
 # Tentang Pembuat Program
 | Nama          | NIM    | Kelas Strategi Algoritma|
 | --------------|--------| ----|
