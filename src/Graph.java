@@ -108,7 +108,8 @@ public class Graph {
         }
         try(BufferedWriter BW = new BufferedWriter(new FileWriter("./src/cache/visitednodes.dat"))){        
             gVal.put(src, 0); //jarak dari start ke dirinya sendiri adalah 0
-            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target))); //buat node baru dengan
+            pq.add(new HeuristicNode(src, 0, mismatchCounter(src, target))); //buat node baru dengan kata adalah kata pertama, g nya 0, dan heuristiknya adalah
+            //banyak huruf yang berbeda dengan kata akhir
 
             while(!pq.isEmpty()){
                 HeuristicNode cur = pq.poll();//dapatkan node yang terletak di depan priority queue
