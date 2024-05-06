@@ -12,7 +12,7 @@ Program ini adalah program yang berfungsi untuk mencari jalur terpendek dalam pe
 4. Ikuti input yang disediakan oleh program. Jika input invalid, pencarian path tidak akan dimulai. Jika input Anda valid, maka hasil penunjukkan path akan diperlihatkan ke dalam GUI.
 5. Anda boleh mengubah isi ```dictionary.txt``` yang berada di dalam src/dictionary dengan syarat **semua huruf dalam suatu kata wajib dalam huruf kecil dan kata baru akan dianggap sebagai kata yang berbeda oleh program jika Anda menulis kata tersebut di baris baru**.
 6. **DILARANG MENGHAPUS FOLDER SRC/CACHE BESERTA FILE .GITKEEP (.gitkeep hanya berfungsi agar folder cache tidak hilang di repository ini) YANG BERADA DI DALAMNYA KARENA PROGRAM INI MEMERLUKAN FOLDER TERSEBUT UNTUK PEMROSESAN PATH.**
-7. **DILARANG MENGHAPUS FILE .DAT APAPUN YANG DIBUAT OLEH PROGRAM INI DI DALAM FOLDER SRC/CACHE SAAT PROGRAM SEDANG BERJALAN KARENA PROGRAM INI MEMBUTUHKAN SEMUA FILE .DAT (kecuali .gitkeep) YANG BERADA DI DALAM FOLDER TERSEBUT UNTUK PENCARIAN PATH**.
+7. **DILARANG MENGHAPUS FILE .DAT APAPUN YANG DIBUAT OLEH PROGRAM INI DI DALAM FOLDER SRC/CACHE SAAT PROGRAM SEDANG BERJALAN KARENA PROGRAM INI MEMBUTUHKAN SEMUA FILE .DAT (kecuali .gitkeep) YANG BERADA DI DALAM FOLDER TERSEBUT UNTUK PENCARIAN PATH**. <br> Keterangan: semua file .dat akan terhapus secara otomatis jika Anda menutup program ini
 8. **DILARANG MENGHAPUS FILE APAPUN DI FOLDER BIN KARENA DIPERLUKAN UNTUK RUN PROGRAM INI**.
 # Tentang Pembuat Program
 | Nama          | NIM    | Kelas Strategi Algoritma|
