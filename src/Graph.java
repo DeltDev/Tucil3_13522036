@@ -1,8 +1,3 @@
-
-
-// A Java program to demonstrate adjacency
-// list using HashMap and TreeSet
-// representation of graphs using sets
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.*;
